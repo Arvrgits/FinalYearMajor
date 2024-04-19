@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class MenuController : MonoBehaviour
 {
-    public void StartBtn()
+    // Reference to the XR Grab Interactable component
+    public XRGrabInteractable grabInteractable;
+
+    void Start()
     {
-        Debug.Log("Start button pressed.");
-        SceneManager.LoadScene("1");
+        // Add an event listener for the button press
+        grabInteractable.onSelectEntered.AddListener(StartGame);
     }
 
-
+    void StartGame(XRBaseInteractor interactor)
+    {
+        // Add your start game logic here
+        Debug.Log("Game started!");
+    }
 }
+

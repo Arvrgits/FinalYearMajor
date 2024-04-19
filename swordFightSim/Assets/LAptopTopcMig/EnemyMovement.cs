@@ -17,27 +17,29 @@ public class EnemyMovement : MonoBehaviour
         {
             // Calculate the direction from the enemy to the player
             Vector3 direction = (player.position - transform.position).normalized;
-            
+
+            // Rotate the enemy to face the player
+            transform.LookAt(player);
+
             // Calculate the movement amount
             Vector3 moveAmount = direction * speed * Time.deltaTime;
 
             // Move the enemy towards the player
             transform.Translate(moveAmount);
         }
-
-    
     }
+
     public void EnemyDestroy()
     {
-        Debug.Log("Mission Accomplishes");
-        //add Game Over Script here
-    } 
-    void OnCollisionEnter (Collision collisionInfo)
+        Debug.Log("Mission Accomplished");
+        // Add Game Over Script here
+    }
+
+    void OnCollisionEnter(Collision collisionInfo)
     {
-        if(collisionInfo.collider.tag == "Player")
+        if (collisionInfo.collider.tag == "Player")
         {
             EnemyDestroy();
         }
-       // Debug.Log(collisionInfo.collider.name);
     }
 }

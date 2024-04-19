@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     public Transform player;
     public float respawnTime = 3f;
+    private List<GameObject> enemies = new List<GameObject>();
 
     void Start()
     {
@@ -18,12 +19,15 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(respawnTime);
-            Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
-            foreach (GameObject enemy in enemies)
+            Debug.Log("Respawning enemy...");
+            if (player == null)
             {
-                enemy.GetComponent<EnemyMovement>().player = player;
+                Debug.LogError("Player is not assigned!");
+                yield break; // Exit the coroutine if player is not assigned
             }
+            GameObject newEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+            newEnemy.GetComponent<EnemyMovement>().player = player;
+            enemies.Add(newEnemy);
         }
     }
 }

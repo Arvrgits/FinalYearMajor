@@ -16,7 +16,7 @@ public class SpawnerController : MonoBehaviour
     void Update()
     {
         TimeElapsed +=  Time.deltaTime;
-        Debug.Log(TimeElapsed);
+        //Debug.Log(TimeElapsed);
         if(TimeElapsed >= 3)
         {
             Spawner.SetActive(true);

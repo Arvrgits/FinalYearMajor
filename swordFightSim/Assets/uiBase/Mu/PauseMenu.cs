@@ -2,28 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] GameObject MenuPause;
+    public XRController leftController;
+    public XRController rightController;
 
-   public void Pause()
-   {
-    MenuPause.SetActive(true);
-   }
+    private bool isPaused = false;
 
-   public void Home()
-   {
-    SceneManager.LoadScene("Main Menu");
-       }
+   void TogglePause(SelectEnterEventArgs args)
+    {
+        isPaused = !isPaused;
 
-public void Resume()
-{
-    MenuPause.SetActive(false);
+        if (isPaused)
+        {
+            Time.timeScale = 0f; // Pause the game
+            // Show pause menu/UI
+            Debug.Log("Game paused");
+        }
+        else
+        {
+            Time.timeScale = 1f; // Resume the game
+            // Hide pause menu/UI
+            Debug.Log("Game resumed");
+        }
+    }
+
+    public void StartGame()
+    {
+        // Start the game by loading the next scene
+        SceneManager.LoadScene("1");
+    }
+
+    public void ExitGame()
+    {
+        // Exit the game
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }
-
-public void Restart()
-{
-    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-}
- }
